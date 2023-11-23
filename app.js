@@ -13,11 +13,11 @@ const forwardBtn = document.querySelector('.forward-btn');
 const backwardBtn = document.querySelector('.backward-btn');
 
 playBtn.addEventListener('click', ()=>{
-    if(playBtn.className.includes('pause')){
-        music.play();
-    } else{
-        music.pause();
-    }
+    // if(playBtn.className.includes('pause')){
+    //     music.play();
+    // } else{
+    //     music.pause();
+    // }
     playBtn.classList.toggle('pause');
     disk.classList.toggle('play');
 })
@@ -26,14 +26,17 @@ playBtn.addEventListener('click', ()=>{
 const setMusic = (i)=>{
     seekBar.value = 0; //set range slide value to 0;
     let song = songs[i];
+    currentMusic = i;
     music.src = song.path;
     songName.innerHTML = song.name;
     artistName.innerHTML = song.artist;
     disk.style.backgroundImag = `url('${song.cover}')`;
     currentTime.innerHTML = '00:00';
     setTimeout(()=>{
-        seekBar.max = music.duration
-    musicDuration.innerHTML = formatTime(music.duration);
+        seekBar.max = music.duration;
+        musicDuration.innerHTML = music.duration;
+    // musicDuration.innerHTML = formatTime(music.duration);
+    console.log(music.duration);
     },300);
 
 }
@@ -41,3 +44,14 @@ const setMusic = (i)=>{
 setMusic(0)
 
 // formatting time in min and  seconds format
+const formatTime = (time)=>{
+    let min = Math.floor(time / 60);
+    if(min < 10){
+        min = `0${min}`;
+    }
+    let sec = Math.floor(time / 60);
+    if(sec < 10){
+        sec = `0${sec}`;
+    }
+    return `${min}:${sec}`;
+}
